@@ -1,0 +1,56 @@
+Git: It is a "command-based tool" that runs locally on your computer. You interact with it using typed commands in the terminal (like git add, git commit, git push). It’s the raw version control system.
+
+
+GitHub: It is a "web-based platform" that provides a graphical interface (buttons, menus, dashboards) to interact with Git repositories. It hosts your projects online and adds collaboration features like pull requests, issues, and discussions.
+
+___________________________________________________________________________________________________________________________________
+terminology:
+commit = save
+Version control = we can track, compare, and restore different versions(It keeps a history of changes: who made them, when, and why)
+roll back = going back to a previous version of your project.
+Forked = split
+
+
+___________________________________________________________________________________________________________________
+
+
+______unit 1________
+What is a repository
+How to create a repository
+Adding files to a repository
+How to search for repositories
+
+Repository: it contains all of our project files which helps us to collaborate with people
+
+How to create a repository:  
+	-->In the upper-right corner of any page, use the drop-down menu, and select New repository.
+	-->Use the Owner drop-down menu to select the account you want to own the repository.
+	-->Type a name for your repository, and an optional description.
+	-->Choose a repository visibility(Public/private)
+	-->Select Create repository and congratulations! You just created a repository!
+
+what is cloning:
+Cloning a repository means creating a local copy of a remote repository on your computer. 
+
+What "cloning" actually does: Copies all files,Links to remote(GitHub)
+
+***we can't perform cloning without git(we must have the git on our computer)
+git clone https://github.com/username/repository.git
+	-->This command will:
+		Download the repository from GitHub.
+		Create a local folder with the same name as the repo.
+		Set up a connection so you can sync changes between your local copy and the remote repo.
+
+How to clone a repository:
+	1)On GitHub.com, navigate to the main page of the repository you want to clone.
+	2)Above the list of files, click the Code button.
+	3)Copy the URL for the repository using the HTTPS, SSH, or GitHub CLI option.
+	4)Open your terminal and navigate to the directory where you want to clone the repository.
+	5)Run the following command, replacing <repository-url> with the URL you copied:
+		git clone <repository-url>
+	6)Once the cloning process is complete, navigate into the repository folder:
+		cd <repository-name>
+	Congratulations! You now have a local copy of the repository.
+
+
+

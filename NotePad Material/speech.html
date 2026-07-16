@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Speech to Text</title>
+</head>
+<body>
+
+<h2>Speech to Text 🎤</h2>
+<button onclick="startSpeech()">Start Talking</button>
+<p id="output"></p>
+
+<script>
+  const output = document.getElementById("output");
+
+  function startSpeech() {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    
+    recognition.lang = "en-IN"; // you can change language
+    recognition.start();
+
+    recognition.onresult = function(event) {
+      const text = event.results[0][0].transcript;
+      output.innerText = "You said: " + text;
+    };
+
+    recognition.onerror = function(event) {
+      output.innerText = "Error: " + event.error;
+    };
+  }
+</script>
+
+</body>
+</html>

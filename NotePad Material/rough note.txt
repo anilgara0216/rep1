@@ -1,0 +1,55 @@
+step 14:
+
+-->context.getBeanDefinitionNames(); --> To return all the beans defined in context/container 
+eg:
+		String[] anil = context.getBeanDefinitionNames();
+		for(String i:anil) {
+			System.out.println(i);
+		}
+-->context.getBeanDefinitionCount() --> To return number of beans defined in the registered  
+
+-->System.out.println(context.getBean("address1", Address.class)); //for ONE specific Address 
+
+-->context.getBean(Address.class) --> throws NoUniqueBeanDefinitionException If more than one bean of type Address exists,   it never returns multiple beans.
+    -->if we want specific bean then "context.getBean("address1", Address.class)"
+    -->if we want all the beans of type Address then there are many ways as shown below,
+        -->getBeansOfType(Address.class)
+        -->@Autowired List<Address>
+        -->@Autowired Map<String, Address>
+        -->ObjectProvider<Address>
+        -->Address[]
+        -->getBean(Address.class)
+
+-->@Qualifier : "Selects specific bean" If we have multiple beans of same type 
+eg:
+	@Bean(name= "address4")
+	@Qualifier("address4Qualifier")
+	public Address address4() {
+		return new Address("street in the chintada", "Chintada");
+	}
+
+    System.out.println(context.getBean("person5Qualifier")); //for printing
+-->use the @qualifier only if it met 3 conditions,
+    -->You are injecting one bean into another (Dependency Injection)
+    -->More than one bean of that type exists in the Spring container
+
+-->@Primary : Default choice
+eg:
+	@Bean
+	@Primary
+	public Address address1() {
+		return new Address("Pallalamma nagar, old town", "Tanuku");
+	}
+
+    System.out.println(context.getBean(Address.class)); //for printing
+
+
+-----------------------------------------------------------------------------
+public GamingConsole game() {
+    return new PackMan();     
+}
+//here return type is GamingConsole so we can return any class which implements GaminConsole here we used PackMan(PackMan IS-A GamingConsole)
+-->so, A method can return:
+    ✅ the return type itself
+    ✅ any subclass / implementation of the return type
+-----------------------------------------------------------------------------

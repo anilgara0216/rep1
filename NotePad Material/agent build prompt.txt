@@ -1,0 +1,19 @@
+leta's take asome break on learning spart of spring and spring boot okay, now i want to build an agent using copilot studio so i opened it in teams but i don't know how to build and how to start because i'm new to that so kindly check the attached screenshot of copiot studio which i opened in teams so now teach me like i'm l kg student for building agent from scractch okay
+
+after clicking on Start now it is showing like 
+Select a team for this chatbot
+You and team owners will have access to this chatbot.
+then
+Feel free to close this window. We'll email you when everything's ready.
+i got this after
+
+
+
+
+hello kindley see the attached screenshot of copilot studio so,
+
+Step 2: Open Your New Copilot
+Once you get the “ready” message, go back to Copilot Studio in Teams.
+You’ll see your new copilot listed under Copilots.
+Click it to open.
+this step completed but after opening i can't able to see the Create a new topic can you tell me where can i find that?

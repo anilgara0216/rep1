@@ -1,0 +1,82 @@
+-->BMAD is like having an entire AI software team instead of a single AI assistant(COPILOT/CHATGPT CLUAD).
+
+-->DEFINITION:
+BMAD is an AI-powered software development framework that uses specialized AI agents (Business Analyst, Product Manager, Architect, Developer, QA, etc.) to take a project from idea to requirements, design, coding, and testing in a structured way.
+
+
+
+1. Fully Interactive Mode
+BMAD stops after every major phase.
+
+________________________________
+You: Build a gym system.
+
+BMAD:
+→ Creates requirements
+→ Waits for your review
+
+You: Looks good
+
+BMAD:
+→ Creates architecture
+→ Waits for your review
+
+You: Looks good
+
+BMAD:
+→ Creates stories
+→ Waits for your review
+_________________________________
+-->Here, BMAD asks for approval at every stage.
+
+
+
+
+2. Semi-Automated Mode (Most Common)
+BMAD does multiple steps automatically but may stop at important checkpoints.
+
+_______________________________________________________
+
+You: Build a gym system.
+
+BMAD:
+→ Requirements
+→ Architecture
+→ User Stories
+
+(All generated automatically)
+
+Then it may ask:
+
+"Review before I start implementation."
+________________________________________________________
+-->After approval, it continues with development and testing.
+
+
+
+
+3. Fully Automated Mode
+You provide a detailed prompt and BMAD runs everything.
+
+_______________________________________________________
+You:
+Build a gym system with:
+- React
+- Spring Boot
+- MySQL
+- Registration
+- Login
+- Payments
+________________________________________________________
+-->No review required unless you want to intervene.
+
+
+
+
+
+
+-->So when I earlier said: "BMAD asks for review"
+	-->I meant it can be configured to do that, not that it is mandatory.
+
+-->One-line Answer,
+BMAD can either ask for approval after each stage or automatically execute the entire chain (requirements → architecture → stories → code → testing) from a single prompt; it depends on the workflow configuration and how you choose to use it.

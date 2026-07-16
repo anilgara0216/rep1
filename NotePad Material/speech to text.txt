@@ -1,0 +1,30 @@
+✅ Languages used
+
+Java → backend
+HTML → UI
+JavaScript → speech recognition
+
+
+✅ Technologies / Frameworks
+
+Spring Boot → backend application
+Web Speech API → converts voice to text
+
+
+✅ Libraries
+
+Apache POI → saves data into Excel
+
+
+✅ Tools
+
+Eclipse → development
+Maven → dependency management
+
+
+✅ What your project does (simple)
+
+User speaks 🎤
+Browser converts speech → text
+Text sent to backend
+Backend saves it in Excel file

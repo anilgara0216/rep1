@@ -1,0 +1,10 @@
+no i will speak something then it should listen and convert that into text late it should store in excel so now build that project and give me then i'll download that and export and import it into eclipse(use whatever it required along with java html spring springboot) build it now and give me 
+
+
+URL format:
+http://localhost:<port>
+
+eg: 
+http://localhost:8080
+
+

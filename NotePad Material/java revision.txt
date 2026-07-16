@@ -1,0 +1,16 @@
+----------------------GIT------------
+
+-->IT IS THE VERSION CONTROL
+-->WE NEED TO INSTALL GIT SOFTWARE ( IN THAT WE HAVE GIT BASE WE CAN TYPE OUR COMMANDS ON THAT)
+-->GIT CLONE , IMPORT (PROJECT IMPORTING), CREATE BRANCH FROM MAIN/MASTER, add/get some data, GIT STATUS, git commit, git push, git merge 
+-->git pull
+-->
+-->
+
+-->
+-->
+-->
+-->
+-->
+-->
+-->

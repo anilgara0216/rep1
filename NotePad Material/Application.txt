@@ -1,0 +1,16 @@
+text to video explaining(with lecturer):
+
+want an app where a student pastes text they’re studying, and instead of just reading it, the app turns that text into a video lecture, like a faculty member explaining it. Essentially, you’re imagining a system that combines text-to-speech (TTS) with video generation/animation to make learning more engaging.
+
+assume there is student and he is learning something using ai chat bot aftyer some time he got bored of studying so he wanted to listen that which is he learning, so if he copy and pasted that entair matter which is he learning into app which we ar edevoloping then that app have to convert that matter into vedio like some faculty/lecturer explaing that as same as online corses or youtube video explanation that's the idea
+
+_________How to build spring boot project:___________
+-->go to --> https://start.spring.io/?utm_source=copilot.com
+-->fill all the details and download file
+-->unzip the file in filemanager
+-->open eclipse and import the file
+-->change the pom.xml
+-->create classes inside sc/main/java
+-->run the class(SampleApplication.java) inside the com.mphasis.learning.sample inside src/main/java
+-->now go to browser and paste the link in browser (http://localhost:8080/swagger-ui/index.html#/user-controller/getAllUsers)
+-->after opening that page we can add, get, delete, update users(CRUD operations)

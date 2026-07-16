@@ -1,0 +1,92 @@
+Sailesh class: 21-04-2026
+
+--> about pom.xml file
+--> to see the output we used swagger
+--> Authentication: Verifying who the person is.
+	eg. checking whether the person is from Mphasis or not
+ Authorization: Determining what the person is allowed to do after they are authenticated.
+	eg. checking that person has access to particular room or not
+	
+	-->IN SIMPLE, Authentication is 1st verification Authorization is 2nd verification
+
+Ganni Raj Kumar: 28-04-2026
+
+-->springBoot
+
+	-->spring framework:
+		-->there are some libraries available in spring framework
+		-->30% work will be done by spring framework using libraries remaining will take care by sb
+
+		-->heavy configuratrion and deployment and less dependencies and some more disadvantages are there In spring framework
+		-->for web based applications we use sb
+	
+	-->springBoot adavantages
+
+		-->deployment IS EASY
+		-->heavy configuratrion NOT REQUIRED
+		-->AUTO CONFIGURATION
+		-->IN BULT SERVER IS ALSO AVAILABLE
+
+	-->Spring framework vs Spring Boot
+		Spring framework:
+		CONFIGURATION is heavy
+		we need to manually install server
+		setup is manually required
+
+
+	-->How to setup springboot in local 
+		-->Ide is required(like eclipse/intellige)
+		-->spring initializer(website)
+		-->download it and import it in ide
+	-->sb architechture (flow)
+		->Api end point-> controller(checks end point and give the flow to services)->services(buisiness logic)-->repository/model->database(entity)
+
+	-->Annotation means predefined 
+	-->advanced springBoot
+
+
+-->database ----SQL, posgre
+-->microservices
+-->restful services
+-->git
+
+
+
+___________________________05/05/2026(Gnana GurumurthyM)___________________________________
+
+-->DI
+-->init method take care of bean injection
+-->destroy
+-->for injecting object we have 2 annotations (@Autowired, @Qualifier, @Primary) ----->injecting beans
+-->@Componant(class level) @bean(method level) ----->creating bean
+-->Scopes of a bean (4 types, singleton, prototype, request, session)
+-->basic annotation
+	-->class level annotationS
+	@controller ()
+	@RestController
+	@Service
+	@Repository (interact with db)
+	
+	-->method level annotations
+	@RequestMapping
+	@GetMapping
+	@RequestParam
+	@QueryParam
+
+-->create API for CRUD operations for Employee Dretails
+________________________________________________________________________
+
+Saranraj Kumaravelu(11-05-2026)
+
+-->REST
+	-->REST API contains methods which are CRUD
+
+	
+
+
+
+
+
+
+
+
