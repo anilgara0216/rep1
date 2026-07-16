@@ -1,0 +1,1514 @@
+Just brushing up on my java skills.
+
+--> we can call methods directly with their names in the constructor
+-->Final is the keyword which restricts the modification
+--> static is a keyword that marks members as class-level, meaning they have only one copy in JVM memory shared across all objects, and can be accessed directly using the class name without creating an instance.(“One copy in memory” Means the JVM allocates a single storage location for count, no matter how many objects you create.)
+
+
+
+---->generics don't support primitive so we have to give WrapperClass
+
+
+
+___________________________________________java basics_____________________________________________
+
+
+--> to read input from user:
+import java.util.Scanner; 
+Scanner myObj = new Scanner(System.in);      // you are telling, Create a Scanner that reads input from the keyboard.
+System.out.println("Enter username"); 
+String userName = myObj.nextLine();
+
+--> You can also use Scanner with other sources:
+--> new Scanner(new File("data.txt")) → reads from a file
+--> new Scanner("Hello World") → reads from a string
+--> But for keyboard input, System.in is the go-to.
+
+
+--> Public − anywhere we can use
+    Private − within the class 
+    Default (no modifier) − within the same package
+    protected
+    Accessible within the same package (like default).
+    Also accessible in subclasses, even if those subclasses are in a different package.
+
+-->variable are of 3 types 1) local variable --defined inside method/block and accessible within the method/block
+                            2) instance variable --definded outside the methode and can be accessed within the class
+                            3) satic variable --declared as same as instance  using static keyword
+                            --> we can't use non static variables directly with their names in the main method( because main  is static method)
+
+--> static block: No, a static block cannot be called multiple times manually. It runs only once, automatically, when the class is loaded
+--> static method: Can be called without creating an object, means using class name we can call static methods( ex: ClassA().meth1(); ).
+                    You can call static methods directly using their method name(eg: meth1(); ), or with the class name like ClassA.meth1().
+
+--> primitive data types are of 8 types which are, byte(size is 8 bit)
+                                                    short(size is 2pwer 16)
+                                                    int(2 power 32)
+                                                    long(2 power 64)
+                                                    boolean(1 bit)
+                                                    char(16 bit)
+                                                    float(32 bit)
+                                                    double(64 bit)
+
+--> ENCAPSULATION : it serves two 2 puposes which are 1)DATA BUNDLING (grouping all(variables,methods) into one single unit(CLASS)) 2)DATA HIDING
+--> INHERITANCE : aquiring the properties and behaviour from one class into another class.
+    types of inheritance: 
+
+                inheritance
+                      │
+    ┌─────────────────┼─────────────────┐
+    │                 │                 │
+ Single         Multilevel       Hierarchical
+    │                 │                 │
+  Class A          Class A           Class A
+    │                 │              ┌──┴──┐
+  Class B          Class B        Class B Class C
+                      │
+                   Class C
+
+
+                 Multiple Inheritance
+                      │
+                  ┌───┴───┐
+               Class A  Class B
+                  │       │
+                  └───┬───┘
+                     Class C
+
+--> POLYMORPHISM : Polymorphism means using the same method name or interface to do different things depending on the object.
+    types of Polymorphism :
+    compiletime polymorhism (METHOD OVERLOADING): multiple methods with the same name but different parameters within the same class.
+    runtime polymorphism (METHOD OVERRIDING) : multiple methods with same name and same parameters in different class
+
+    eg. 🧠 Real-World Analogy:
+Vehicle’s start method
+
+A car starts with a key
+A bike starts with a kick
+An electric scooter starts with a button
+All have a start() method, but each behaves differently depending on the vehicle type.
+
+
+_____Scenario for overriding_____ :
+java
+class Animal {
+    void eat() {
+        System.out.println("Animal eats food");
+    }
+}
+
+class Dog extends Animal {
+    // No eat() method here
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal myDog = new Dog();  // Animal reference, Dog object
+        myDog.eat();               // Output: Animal eats food
+    }
+}
+🔍 What’s Happening Here?
+Dog inherits the eat() method from Animal because it doesn’t define its own.
+
+When you call myDog.eat(), Java looks for the method in the actual object (Dog), doesn’t find it, so it uses the inherited one from Animal.
+
+Since eat() is not overridden, the parent class version is used.
+
+🧠 So What’s the Use?
+Even though Dog doesn’t override eat(), inheritance still provides value:
+
+Code Reuse: You don’t have to rewrite eat() in every subclass unless the behavior needs to change.
+
+Consistency: All animals (Dog, Cat, etc.) can share common behavior from the Animal class.
+ 
+Flexibility: If you later decide that Dog needs a different eat() behavior, you can override it — and the rest of the code using Animal references will automatically use the new behavior.
+
+
+
+________________________________________________________________________________________________________________________________________________Multi Threading_______________________________________________
+
+
+
+--> Multitasking: performing multiple tasks at the same time by a single processor
+--> in java we can achieve the multitasking in 2 ways
+	1)process based multitasking(Multi-tasking) 2)Thread based multitasking(Multi-Threading) 
+    -->multi-processesing will take more memory when compared to the multi-threading 
+
+	-->Assume a processor with any address location like 564 so this processor has some threads to perform 	different tasks like for task1 thread1 is responsible similarly for task2 thread2 is responsible
+		-->so a processor is acts like a host to thread,
+		-->threads share same address locations
+		-->for creating a thread at least one processor is required
+	-->Multi-processing: to perform different tasks we need different processors (Multiprocessing involves multiple processors)
+		-->if there are 3 tasks then 3 processors are required
+	-->Multi-Threading: to perform different tasks one processor is enough but inside processor threads are required according to the no of tasks(all the threads will refer to same address locations)
+	    -->we can create a Thread in 2 ways,
+		1)by extending Thread class
+		2) by implementing Runnable interface (runnable interface is one type in functional interface, F I means an interface having only one abstract method
+		-->Thread class and Runnable interface are present in java.lang package so no need to import them because that package by defaultly imported into every java program.
+            -->when we are starting a thread then by defaultly run method will be executed
+            -->Whenever we are calling start() every time a new thread will be created.
+            -->run() is abstract method inside the runnable interface/thread class
+
+            public class ClassA extends Thread {
+                public void run() {
+                    for(inti=0;i<=5;i++) {
+                        System.out.println("run method executed" + i + "times");
+                    }
+                }
+                public static void main(String []args) {
+                    ClassA aobj = new ClassA();
+                    Thread t1 = new Thread(aobj);           //here we are passing classA object to the thread
+                    t1.start();                             //run() present in ClassA will be executed
+
+                    Thread t2 = new Thread();
+                    t2.start();                             //run() present in Thread class will be executed
+
+                }
+            }
+
+
+            public class ClassA implements Runnable {
+                public void run() {
+                    for(inti=0;i<=5;i++) {
+                        System.out.println("run method executed" + i + "times");
+                    }
+                }
+                public static void main(String []args) {
+                    ClassA aobj = new ClassA();
+                    Thread t1 = new Thread(aobj);           //here we are passing classA object to the thread
+                    t1.start();                             //run() present in ClassA will be executed
+
+                    Thread t2 = new Thread();
+                    t2.start();                             //run() present in Thread class will be executed
+
+                }
+            }
+
+            --> main method also a thread
+            --> Multiple inheritance of classes is not possible(more than one class extending eg: public class ClassA extends ClassB, ClassC ).
+            --> implementing runnableinterface is befinifitory because we can extend and implement more than one class/interface
+            
+    --> we can set name for the threads by using setName() and we can get the the name of the thread which is running by using getName()
+        -->  Thread t1 = new Thread();
+            Thread t2 = new Thread();       //creating thread
+            t1.setName("First Thread");     
+            t2.setName("Second Thread");    //naming the thread
+            t1.start();                     
+            t2.start();                     //running the thread
+
+        --> String name = Thread.currentThread().getName();     //currentThread is a static method in Thread class so directly calling it using class name i.e Thread, and getname is the method to get the name
+            System.out.println(name);       //storing hte name of the thread in string and naming it as name using that name just printing
+    -->so when we are using more than one thread in our program then we can't guess the output like which thread will execute first and which will get execute at last
+    --> to overcome this issue we have one concept in java which is "Thread Schedular"
+
+        -->Thread Schedular: It is responsible for starting the threads.
+        -->It will decide which thread should start 1st basing upon 2 aspects which are 1)Thread Priority 2)Underlying outside
+        1)Thread priority: it varies b/w 1 to 10
+            -->we can set the priority like t1.setPriority(1); 
+            -->we can get the priority like, int p = Thread.currentThread().getPriority();
+            System.out.println(p);
+
+
+        -->Generally if we want to get exact thread execution flow then we must have more than 16gb of ram of our system then only we will get otherwise execution of threads will be in non sequential even though we are giving the priorities So, WE CAN'T GUESS THE ORDER OF OUPUT IN THREADS.
+
+    --> There are some methods which are present in thread class,
+        -->    join(), yield(), sleep(), interrupt()  these 4 are most commonly used methods
+        -->    wait(), notify(), notifyAll()  these 3 methods are used for inter thread communications 
+
+             public class ClassA extends Thread {
+                public void run() {
+                    System.out.println("Method from classA");
+                }
+            }       
+
+            public class ClassB extends Thread {
+                public static void main(String []args) {
+                    ClassA aobj = new ClassA();
+                    aobj.start();
+                    System.out.println("Method from the ClassB");
+                }
+            }
+
+        output: Method from the ClassB
+                Method from classA
+
+                -->why this "Method from the ClassB" statement prints 1st means,start() does not immediately run run(). Instead, it tells the JVM’s thread scheduler: “Please create a new thread and, when you get a chance, run its run() method.”
+                -->this is not fixed because we can't expect the threads execution
+
+                Meanwhile, your main thread continues executing the next line right away
+
+        -->JOIN METHOD(join()): If the current executing thread came accross join() then immediately it will shift its process to the other waiting thread then it will come back when the waiting thread completed (it is used when we want to control the execution flow of threads)
+            eg: public static void main(String []args) {
+                Thread t = new Thread();
+                t.start();                              //this will wait untill the below statement executes because before t executes main thread will execute and t will going to waiting state
+                t.join();                               //when we use this method then it goes to waiting thread i.e run() (t.start();) then after that it come to execute below statement
+                System.out.println("sample program");
+            -->Join() allows current execution thread to wait for the completion of another thread(waiting thread)
+
+        -->SLEEP METHOD(sleep()):    it will pause/stop the thread execution for a particular amount of time
+
+        --> Interrupt() : it brings the sleeping thread into working stage
+            usage -->   ClassA aobj = new ClassA();
+                        Thread t = new Thread(aobj);
+                        t.sleep();
+                        t.interrupt();  //interrupt method will act only when a thread is in sleeping state
+                                        //if there is no thread is in sleeping state then interrupt method will wait untill the thread goes to sleeping state
+                                        // in entair program is there is no thread is in sleeping state then there is no impact of interrupt method in our program
+        -->Yield() : It informs the ThreadSchedular to start another thread which is having same pririty 
+            usage -->   public static void main(String []args) {
+                            ClassA aobj = new ClassA();
+                            Thread t = new Thread(aobj);
+                            t.start();
+                            Thread.Yield();
+                            System.out.println("method from main");
+                        }
+
+
+
+
+        -->Difference between Join() and Yield() : 
+                                                   -->assume 2 threads t1,t2 and if t1 came across yield() then t1 tells to ThreadSchedular like ready to shifts its process to the other threads like t2 which are having same priority(here dicision willbe taken care by the ThreadSchedular) , here in same case if multiple threads are there then we don’ know which thread will run first.
+                                                        -->when we use yield() whether it shifts it's processor or not we do'nt know that, because that decision will be taken care by the ThreadSchedular but when it comes to join() 100% it will shift the processor to the other waiting thread(join is non static but yield isstatic method)
+
+        --> Synchronized keyword:  if we use synchronized keyword only one thread will acts on that synchronized method/block untill the 1st thread completed it's execution.
+
+        -->It prevents inconsistent results, and helps achieve sequential and safe execution when multiple threads run simultaneously.
+            --> Synchronized block: some part of code/few lines of code will be synchronized.
+            --> Synchronized method: entair code will be  Synchronized.
+            --> we will use this Synchronized keyword when we use more than 1 thread and started all those threads at the same time 
+            --> for sequential execution of threads we will use this synchronized keyword
+
+eg: 
+public class ClassA extends Thread {
+    public void run() {
+        m1();
+    }
+    synchronized void m1() {
+        String name = Thread.currentThread().getName();
+        System.out.println(name + "has started");
+        for(int i = 1; i <= 5; i++) {
+            System.out.println(name + "executed" + i + "times");
+        }
+        System.out.println(name + "ended here");
+    }
+
+    public static void main(String[] args) {
+        ClassA aobj = new ClassA();
+        Thread t1 = new Thread(aobj);
+        Thread t2 = new Thread(aobj);
+        t1.setName("First Thread");
+        t2.setName("Second Thread");
+        t1.start();
+        t2.start();
+    }
+}
+
+        --> when we want to use 2 or more run methods for threads then we can use anonymous inner class in that inner classses we can writerun methods
+        --> we should not end with a ; when we are usuing the anonymous inner class(anonymous inner looks like { }; )
+        --> DeadLock: 
+                    Deadlock is a situation where two or more threads are permanently stuck because both threads waiting for each other
+
+        --> Dead lock will occure due to synchronization concept(and we can avoid deadLock by using correct use of synchronization)
+
+        --> If we want to override the methods in Thread then only we nee to extend/implementthe Thread other wise no need (we can create threads and use  anonymous inner calsses then in that class we can write run methods)
+            --> if we extend the Thread class then we have to attach class object to that thread
+
+        -->wait(): when thread came accross this wait method then thread execution will be stopped untill another thread tells for resume the execution this concepst is know as Inter Thread communication.
+        -->notify(): Whenever thread came accross this notify method then it tells to another thread tocontinue the execution which is having wait()
+                --so for to stop the thread execution wai() and to resume that execution we will use notify()
+        --> notifyAll(): when the program having more than one theads and wait methods then we can use notifyAll()
+
+            new Thread() {
+                public void run() {
+                    System.out.println("this is one of the way to achieve threads without any extend/implement thread);
+                    System.out.println("after thread { } this part is known as anonymous inner class");
+                }
+
+            }.start();
+        --> if we don't want to use notify and notifyAll methods to resume that wait methods then we can use time in the wait method just like sleep method eg wait(5000)
+
+                                    
+_____________________________________________________________________________________________________________________________________________Exception Handling_______________________________________________
+
+
+error: there are 3 types of errors 1)COMPILE TIME ERROR 2)RUN TIME ERROR 3) LOGICAL ERROR
+	1) COMPILE TIME ERROR: THESE ERRORS OCCURE DUE TO THE WRONG SYNTAX
+	2) RUNTIME ERROR: THESE ERRORS OCCURE DUE TO THE INSUFFIECIENT IF THE MACHINE
+	3) LOGICAL ERROR: THESE ERRORS OCCURE DUE TO THE BAD LOGIC IN THE CODE
+--> ERROR IS IS serious problems, usually unrecoverable, caused by JVM/system.
+
+--> EXCEPTION IS AN abnormal condition in program flow, 
+
+--> WE CAN HANDLE THE EXCEPTION BUT WE CAN'T HANDLE THE ERROR
+
+--> exceptions are of 2 types which are 1)checked and 2)unchecked exceptions
+	exceptions occurs always inside method or block
+	-->The exceptions which are detected by the Java compiler at compilation time are known as CHECKED exceptions 
+	-->The exceptions which are detected by the JVM at a run-time are know as UNCHECKED  exceptions
+
+--> WHENEVER AN EXCEPRION OCCURED INSIDE A JAVA METHOD THEN JAVA METHOD WILL CREATE AN OBJECT, THIS EXCEPTION OBJECT WILL CONSISTS OF NAME AND REASON OF THE EXCEPTION AND THIS EXCEPTION OBJECT WILL SENd TO THE JVM THEN JVM WILL TAKE HELP OF THE DEFAULT EXCEPTION HANDLER AND THIS WILL CHECK WHEATHER JAVA METHOD CONSISTS OF ANY EXCEPTION HANDLING TACHNIQUES ARE THERE OR NOT IF THAT METHOD DOSESN'T HAVE ANY HANDLING TECHNIQUES THEN PROGRAM WILL BE TERMINATE AND PRINTS BASIC INFO ABOUT THE EXCEPTION LIKE NAME AND REASON IF ANY IF ANY EXCEPTION HANDLING ARE PRESENT IN THE JAVA METHOD THEN THE DEFAULT EXCEPTION HANDLER WILL SEND THE EXCEPTION OBJECT WHICH CONTAINS NAME AND REASON AND OTHER DETAILS OF THE EXCEPTION
+
+JAVA METHOD ---CREATES---> EXCEPTION OBJECT(CONSISTS OF INFO ABOUT EXCEPTION) ---SEND TO---> JVM ---TAKE HELP OF DEFAULT EXCEPTION HANDLER ---IT CHEKCS ---> JAVA METHOD ---IF ANY TECHNIQUES ARE THERE---> IF YES THEN DEH WILL SEND THE EXCEPTION OBJECT TO THOSE EXCEPTION HANDLING TECHNIQUES--->IF NO THEN DEH WILL SIMPLY PRINTS BASIC INFO ABOUT EXCEPTION.
+
+-->SUPER CLASS FOR ALL THE JAVA CLASSES ARE OBJECT CLASS just like that FOR ALL THE ERRORS AND EXCEPTIONS  IS THROWABLE
+
+--> exception handling means not removing nor resolving the exception, we are providing an alternative way to continue the flow of program ( after exception handling program will not be terminated )
+	--> even the exception handling is done the exception is the exception will be there but program will not be terminated
+
+-->we can handle exception using try-catch-finally blocks
+	-->inside try block we will write code
+	-->inside catch block we will handle the exception which is occurred in the try block
+	-->finally block will always gets execute irrespective of the exception(WE CDAN SAY IT USED TO CLOSE THE RESOURCE AS A GOOD PROGRAMER)
+
+class ClassA {
+    public static void main(String[] args) {
+        try {
+            System.out.println("just try block");
+        } catch (Exception e) { // Exception is a class, e is a reference
+            System.out.println("catch block will handle the exception occurred in the try block");
+        }
+    }
+}
+
+-->catch block will be executed only if there is an exception inside the try cblock
+
+--> we can display the exception in 3 ways
+-->getMessage() will prints the reason for the exception
+-->toString() will prints the name of the exception along with the reason eg. e.toString()
+printStackTrace() will prints the complete info about the exception
+
+
+-->key points in Exception Handling:
+	-->we need to follow the order
+	-->there should not be any statements between 3 blocks
+	-->The present after the exception will not be printed because when exception occurs compiler goes to catch block directly
+	-->try block can't execute without catch or finally block
+	-->IF WE WANT TO HANDLE EXCEPTION THEN 100% WE HAVE TO WRITE CATCH BLOCK
+	--> A SINGLE TRY BLOCK CAN HAVE A MULTIPLE CATCH BLOCK
+		-->WHILE WE ARE USING MORE THAN 1 CATCH BLOCKS WE HAVE TO USE 1ST CHILD EXCEPTION THEN PARENT(EG: 1ST USE ARITHEMETICEXCEPTION THEN USE EXCEPTION)
+		why because once exception handled then we can't handle that exception again)
+	--> If we want handle 2 exceptions then we need to write 2 try catch blocks
+	--> from java 1.7 version onwards we can handle multiple exceptions by a single catch block( eg.; catch(arthimaticException | NullPointerException))
+
+
+-->throw keyword: used to display user defined exception messages(normal people can't understand exception messages so we can write by our own about the exception as a comment those are called user defined exception)
+		-->imagine a normal people went to atm and trying to withdrawn some amount but their available balance is less eg withdrawn amt= 10000 avl blc=5000 so it will get arithmetic exception this exception can't be understandable by normal people that's why we use throw keyword to display user understandable exception/message)
+	--> It is used inside the method only
+	-->eg.	throw new RuntimeException("Balance is not sufficient")
+	--> We can use throw keyword for both checked and unchecked exceptions
+
+-->throws keyword: it is used to escape from exception handling
+	--> it is used along with the method signature(method name)
+	--> If we use throws keyword then the caller method should handle the exception using try, catch, finally or declare it again with throws.
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Scanner;
+
+class ClassA {
+    public void M1() throws Exception {
+        FileInputStream fis = new FileInputStream("roughNote.txt");
+        System.out.println("File opened successfully");
+        
+        
+        Scanner sc = new Scanner(fis);
+        while(sc.hasNextLine()) {
+            String s = sc.nextLine();
+            System.out.println(s);
+        }
+        sc.close();
+        fis.close();
+        
+    }
+    public static void main(String args[]) {
+        ClassA co = new ClassA();
+        try {
+            co.M1();
+        }
+        catch (Exception e) {
+            System.out.println("this is the Exception " + e.getMessage());
+            System.out.println("exception handled");
+        }
+    }
+}
+
+--> The above program is for reading the file, exception is used for file mismatches(if file not founded then exception will do the job and it will be handled)
+
+
+	--> we need to use throws keyword only for checked exceptions(like i/o exception)
+	--> we will use i/o streams for reading and writing the data from a file
+	
+
+
+
+--> Final:
+	--> it  is a keyword in java used to restrict the user
+	--> we can use final for variable, method, class
+	--> we can't change final variable, we can't override the final method, we can't inherit final classes
+
+	--> We can't inherit a private so we can't perform overriding
+
+
+_____________________________________________________________________________________________________________________________________________Collection framework_____________________________________________
+
+
+
+
+-->Collection framework: is a unified architecture that provides a set of interfaces and classes for storing, retrieving, and manipulating groups of objects.
+
+	-->In collection framework there are 2 root Interfaces are there which are 1)Collection 2)Map
+	-->root interface means top-most interface in a hierarchy
+	-->All the problems faced with arrays can be overcome by the Collection Framework
+	-->Collection Framework
+		1)Collection(interface)
+			1)List(interface)
+				i.	ArrayList(class)
+				ii.	LinkedList(c)
+				iii	Vector(c)
+                iiii Stack (LIFO)
+			2)Set(interface)
+				i.	HashSet(c)
+				ii.	LinkedHashSet(c)
+				iii.TreeSet(c)
+
+			3)Queue(interface)
+				i.	LinkedList(c)
+				ii.	PriorityQueue(c)
+                ii. arrayDequeue
+		2)Map(interface)
+
+			1)HashMap(c)
+			2)LinkedHashMap(c)
+			3)TreeMap(c)
+			4)HashTable(c)
+	-->DIFERENCE BETWEEN SET & LIST : elements are stored just like an array in both list and set but duplicates are not allowed in list but not in set
+	-->In queue elements are stored in FIFO(same like an array)
+	-->when it comes to map e   lements will be stored in the form of key-value 
+
+	-->DIFFERENCE BETWEEN ARRAYS AND COLLECTIONS:
+			arrays are fixed in size and accepts same type of data(Homogeneous data), while collections are no fixed in size and allows different type of data(hetereogeneous data)
+
+_________________________________________LIST_______________________________________________
+
+========================================ARRAYLIST=======================================
+
+		-->DUPLICATES ARE ALLOWED
+		-->NULL IS ALLOWED
+		-->HETERGENIOUS(DIFFERENT TYPES OF DATA) DATA IS ALLOWED
+		-->TO AVOID PROBLEMS OF type casting JAVA GENERICS are there
+	
+	methods usd in the collections are:
+		size(), isEmpty(), clear(), contains()(eg for contains() is contains("java')), remove(10) here 10 is index position
+	
+	***add(2,100) --> this means at 2nd index position 100 will be added
+	***get(1) --> this will gives the 1st index position
+
+
+	Iterator it is a special object tha
+	hashNext() --> this will check if any element are there after cursor
+	next() --> this will prints the element which is present after the cursor then moves the cursor forward
+
+	*** collections will accept objects not data types
+		eg.for(Object o : al) {
+			System.out.println(o);
+		}
+	-->in above code we need to mention the data type of the collection/arrayList so instead of int we mentioned Object
+
+	*** TO AVOID THE PROBLEMS OF TYPE CASTING GENERICS HAVE BEEN INTRODUCED
+
+	iterator(): --> this give us a iterator interface which is helpful to iterate the elements in arrayList 
+	eg: arrayList al = new arrayList();
+	    Iterator it = al.iterator();
+	while(it.hashNext()) {
+		System.out.println(i.next());
+	} 
+	
+
+    normal program on arraylist:
+    import java.util.ArrayList;
+class ClassA {
+    public static void main(String args[]) {
+        ArrayList<Object> al = new ArrayList<Object>();
+        al.add("Anil Gara");
+        al.add(17);
+        al.add(10);
+        System.out.println(al);
+        
+    }
+}
+    ***arl.remove((Object)70); //here arl means name of the arrayList & we are removing 70 by converting it into an Object, if we we gave directly that number then it will consider that as an index number so we need to convert that into an object (means we are telling compiler that it is a value not index number)
+
+***array List code
+import java.util.*;
+class ClassA {
+    public static void main(String arfs[]) {
+        ArrayList<Integer> arl = new ArrayList<>();
+        arl.add(90);
+        arl.add(80);
+        arl.add(70);
+        arl.add(60);
+        arl.add(50);
+        arl.add(40);
+        //retrieving elements in arrayList using for loop
+        for(int a=0 ; a<arl.size(); a++) {
+            System.out.print(arl.get(a) + " ");
+        }
+        System.out.println();
+        
+        *** to remove specific value----> arl.remove((Object)70);
+        //retrieving elements in arrayList using for Iterator
+        Iterator i =arl.iterator(); //here iterator method will gives the iterator which will be placed before the 1st element in the arrayList(like cursor) so with that we can go through the arrayList one by one
+        while(i.hasNext()) { // hashNext will checks the element is present or not after the iterator/cursor
+            System.out.print(i.next() + " ");
+        }
+        System.out.println();
+        arl.add(2,70);
+        //retrieving elements in arrayList by using directly with arrayList name
+        System.out.print(arl + " ");
+        System.out.println();
+        //retrieving elements in arrayList using for each loop
+        for(Object o: arl) { //here in place of Object we can use Integer/int but arrayList must have only integer elements
+            System.out.print(o + " ");
+        }
+        System.out.println();
+        
+    }
+}
+
+------Adds all elements from another collection------
+ArrayList<Integer> al2 = new ArrayList<>();
+al2.add(30);
+al2.add(40);
+al.addAll(al2);   // [20, 10, 30, 40]
+
+-----Inserts all elements at a specific position-------
+al.addAll(1, al2);
+
+----- // replaces element at index 2------
+arl.set(2, 99);
+
+----used to remove 1st occurence of specifieed value-----
+al.remove(Integer.valueOf(10));
+
+-----remvoves all the elements in the arraylist---
+al.clear();
+
+------Returns the index of the first repeated value.--------
+System.out.println(al.indexOf(30));
+
+------Returns the index of the last repeated value-------
+System.out.println(al.lastIndexOf(30));
+
+***listIterator()  and iterator() both will work same and syntax also similar
+
+===================================Vector=============================================
+
+------------Vector: It is a class in the list Interface of the collection Root Interface------
+
+*** we will call vector and HashTable as "Legacy classes" because they both are INTRODUCED at the starting after that all the other classes are introduced
+    ***Enumeration Interface: used to retrieve the data from only legacy classes
+
+package Pack1;
+
+import java.util.*;
+class ClassA {
+    public static void main(String args[]) {
+        System.out.println("........Implementing Vector.......");
+        System.out.println();
+        ArrayList al = new ArrayList();
+        Vector<Object> v = new Vector<>();
+        v.add(10); // follows the insertion order
+        v.add(10); //vector allows the duplicate
+        v.add("Anil"); // heterogenious data is allowed
+        v.add(null); //null is allowed
+        v.add(78); //Vector is available from java 1.0v (ArrayList from1.2v)
+        v.add(45); //Default capacity is 10 & this size will be increased by double
+        v.add(88);// it is synchronized by default( ArrayList not)
+        System.out.println(v);
+        System.out.println();
+        
+        System.out.println("-------USing for loop-------");
+        for(int i=0; i<v.size();i++) {
+            System.out.println(v.get(i));
+        }
+        
+        System.out.println("----Using for each loop-----");
+        for(Object o: v) {
+            System.out.println(o);
+        }
+        System.out.println("-----Using Iterator Interface------");
+        Iterator<Object> it = v.iterator(); //here in lest side Iterator means it is the retrurn type
+        while(it.hasNext()) {
+        	System.out.println(it.next());
+        }
+        
+        System.out.println("---Using Enumerator Interface-----");
+        Enumeration<Object> e = v.elements();
+        while(e.hasMoreElements()) {
+        	System.out.println(e.nextElement());
+        } 
+    }
+}
+
+
+*** elements() it is a method present in the Vector and it will provide Enumeration as like Iterator() provides iterator and this Enumeration will iterate and retrieve the elements in the vector one by one
+    --> in this Enumeration it provides 2 methods as like iterator 1)hasMoreElements() 2)nextElement()
+
+    --> methods present in the Vector: 
+        addElement();
+        removeElement(Object o);
+        removeElementAt(index);
+        reoveAllElements();
+        lastElement();
+        firstElement();
+
+=======================================LinkedList=============================================
+
+package Pack1;
+
+import java.util.*;
+class ClassA {
+    public static void main(String args[]) {
+        System.out.println("........Implementing LinkedList.......");
+        System.out.println();
+        LinkedList<Object> ll = new LinkedList<>();
+        
+        ll.add(10); // follows the insertion order
+        ll.add(10); // allows the duplicate
+        ll.add("Anil"); // heterogenious data is allowed
+        ll.add(null); //null is allowed
+        ll.add(78); //Vector is available from java 1.0v (ArrayList from1.2v)
+        ll.add(45); //Default capacity is 0 & this size will be increased by double
+        ll.add(88);// it is not synchronized
+        System.out.println(ll);
+        System.out.println();
+        
+        System.out.println("-------USing for loop-------");
+        for(int i=0; i<ll.size();i++) {
+            System.out.println(ll.get(i));
+        }
+        
+        System.out.println("----Using for each loop-----");
+        for(Object o: ll) {
+            System.out.println(o);
+        }
+        System.out.println("-----Using Iterator Interface------");
+        Iterator<Object> it = ll.iterator();
+        while(it.hasNext()) {
+        	System.out.println(it.next());
+        }
+        
+        System.out.println("______Using ListIterator_______");
+        ListIterator l = ll.listIterator();
+        while(l.hasNext()) {
+        	System.out.println(l.next());
+        }
+        
+       System.out.println();
+       System.out.println("to retrieve the elementsin reverse printing we use hasprevious() & previous");
+       
+       while(l.hasPrevious()) {
+    	   System.out.println(l.previous());
+       }
+        
+        System.out.println("---we can't use Enumerator Interface-----");
+
+        
+    }
+    
+}
+
+    -->LinkedList occupies more memory than arrayList
+    -->arrayList is faster than LinkedList, MANUPULATION of elements are easier in LinkedList
+
+
+Which collection is best if you need fast random access?  
+👉 ArrayList — because it’s backed by a dynamic array, so get(index) is O(1).
+
+Which collection is synchronized by default?  
+👉 Vector — it’s thread‑safe (all methods are synchronized), though it’s considered legacy today.
+
+Which collection is ideal for frequent insertions/deletions in the middle?  
+👉 LinkedList — because it’s a doubly linked list, so adding/removing nodes is O(1) once you have the reference.
+
+______________________________________SET_____________________________________________
+
+===================================HashSet & LinkedHashSet==========================================
+
+package Pack1;
+import java.util.*;
+
+public class HashSetClass {
+	public static void main(String[] args) {
+		System.out.println("Implementing HashSet and LinkedHashSet......");
+		//LinkedHashSet<Object> lhs = new LinkedHashSet<>();
+		//for Linked HashSet all are same
+		//but insertion order is maintained in the LinikedHashSet & it is available from java 1.4v
+		
+		HashSet<Object> hs = new HashSet<>();
+		hs.add("Anil"); //insertion order is not maintained
+		hs.add(20); //Heterogeneous data is allowed 
+		hs.add(30); //Duplicates data is not allowed 
+		hs.add(null); //null is allowed
+		hs.add(10); //it is available from java 1.2v
+		hs.add(10); //it is not synchronized by default
+		hs.add(70); 
+		//default capacity is 16
+		//( upto 12th element size won't increase after entering 13th element size will be increased to 32 means double)
+		hs.add(80);
+		hs.add(90);
+		hs.add(100);
+		System.out.println(hs);
+		
+		System.out.println("by using Iterator");
+		Iterator<Object> it = hs.iterator();
+		while(it.hasNext()) {
+			System.out.println(it.next());
+		}
+	}
+
+}
+
+=====================================TreeSet==========================================
+
+package Pack1;
+
+import java.util.Iterator;
+import java.util.TreeSet;
+
+public class TreeSetClass {
+	public static void main(String[] args) {
+		System.out.println("Implementing the TreeSet...");
+		TreeSet<Object> ts = new TreeSet<>();
+		ts.add(10); //Insertion order not maintained (it will maintain ascending order)
+		//ts.add(null); //null is not allowed
+		//ts.add("Anil"); //heterogeneous data is not allowed
+		ts.add(20); //remaining all are same as hashSet
+		ts.add(90);
+		ts.add(60);
+		ts.add(20);
+		ts.add(40);
+		System.out.println(ts);
+		System.out.println();
+		System.out.println("descendingIterator() → available in LinkedList, TreeSet, TreeMap");
+		Iterator<Object> it = ts.descendingIterator(); //same like Iterator but iterated in reverse
+		while(it.hasNext()) {
+			System.out.print(it.next() + " ");
+		}
+		System.out.println();
+		System.out.println();
+		System.out.println("these below 2 methods supports only in Treeset and TreeMap");
+		System.out.println(ts.headSet(20)); //returns all the values which are less than given value
+		System.out.println(ts.tailSet(20)); //returns all the values which are >=  given value
+	}
+	
+}
+
+
+
+*** HashSet --> it doesn’t maintain insertion order
+*** LinkedHashSet --> Inserion order is maintained
+*** TreeSet --> Maintains sorted(ascending) order, it will not allow heterogeneous data & null values
+    --> all three classes won't allow the duplicates
+
+
+______________________________________QUEUE_____________________________________________
+
+LinkedList in List mode -→ behaves like a normal list with index-based access.
+
+LinkedList in Queue/Deque mode → gives you extra methods (poll(), offer(), peek(), push(), pop()) for queue and stack behavior.
+
+-->***the differences between LinkedList and PriorityQueue are:
+    when we use PriorityQueue //Insersion order is not maintained //heterogeneous data is not allowed and //null is not allowed
+    when we use LinkedList those 3 are allowed
+
+
+package Pack1;
+import java.util.*;
+
+public class QueueClass {
+	public void LinkedList() {
+		//System.out.println("Implementing LinkedList in Queue Intreface");
+		Queue<Object> ll = new LinkedList<>();
+		ll.add(10);
+		ll.offer("Anil"); 
+		ll.add(20);
+		ll.add(30);
+		ll.add(40);
+		ll.add(20);
+		ll.add(60);
+		ll.add(20);
+		ll.add(80);
+		System.out.println(ll);
+		System.out.println(ll.poll()); //it retrives the 1st element after removing it from the queue
+		// the poll() returns null when the queue is empty
+		
+		System.out.println(ll);
+		System.out.println(ll.remove()); //this will remove the 1st element in the queue
+		//we will get exception when we use remove() if queue is empty
+		
+		System.out.println(ll);
+		System.out.println(ll.remove(4)); //here if 4 is there in the queue then it removes and gives true
+		//if 4 is not there inside the queue then it returns false
+		//*** We can't remove the elements using index values when we use LinkedList in the Queue interface
+		
+		System.out.println(ll);
+	}
+	public void PriorityQueue() {
+		System.out.println("Implementing PriorityQueue in Queue Intreface");
+		
+		PriorityQueue<Object> pq = new PriorityQueue<>();
+		pq.add(10); //Insersion order is not maintained
+		//pq.offer("Anil"); //heterogeneous data is not allowed
+		//pq.add(null); //null is not allowed
+		pq.add(20); 
+		pq.add(1); //Duplicates are allowed
+		pq.add(30); //available from java 1.5v
+		pq.add(1); //Default capacity is 11
+		pq.add(50); // it not synchronized by default
+		pq.add(60);
+		pq.add(70);
+		System.out.println(pq);	
+		System.out.println(pq.poll());
+		System.out.println(pq);
+		System.out.println();
+		
+		for(Object o: pq) {
+			System.out.print(o + " ");
+		}
+		System.out.println();
+		
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("Implementing queue classes");
+		System.out.println();
+		//new QueueClass().LinkedList();
+		new QueueClass().PriorityQueue();
+		
+		
+	}
+
+}
+
+=====================================Map==========================================
+
+--> In map elements will be stored in the form of Key-Value pairs (Key is must be unique and value can be duplicate)
+    -->If we gave duplicate key then we won't get error, the newly entered value will be updated into that particular duplicate key
+
+_________________________________HashMap & LinkedHashMap___________________________________________
+
+-->same like Haset and LinkedHashSet HashMap and LinkedHashMap are simililar.
+-->In simple, hashset & HashMap won't follow the insertion order and both are available from java 1.2
+    LinkedHashSet and LinkedHashMap both will follow the Insertion order & both are available from java 1.4
+
+-->In map only put() will be available for adding the elements into the map not add()
+-->*** combination of key & value is known as Entry
+
+
+package Pack1;
+
+//import java.security.KeyStore.Entry;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map.Entry;
+
+public class HashMapClass {
+	public static void main(String[] args) {
+		System.out.println("Implementing HashMap");
+		
+		LinkedHashMap hm = new LinkedHashMap(); //here insertion order is maintained & it is available from java 1.4v rest all are same as HashMap 
+		
+		//HashMap hm = new HashMap();
+		hm.put(100, "Anil"); //Insertion order is not maintained
+		hm.put(null, null); //null is allowed
+		hm.put(101, "Polisu"); //duplicate keys are not allowed 
+		//Duplicate Values are allowed but old value is replaced with new value for that duplicate key
+		hm.put("Madhuri", 10); // heterogeneous key are allowed
+		hm.put(103, "is"); //heterogeneous values are allowed
+		hm.put(105, "Awesome"); //it is available from java 1.2v
+		hm.put(110, "gara"); //
+		hm.put(102, 20000);
+		hm.put(100, "Gowri");
+		System.out.println(hm);
+		hm.put(101, "Raju");
+		
+		System.out.println(hm);
+		System.out.println();
+		
+		System.out.println("For getting only the keys........");
+		HashSet hs = new HashSet(hm.keySet()); //keySet() will return/print the all available keys inside a map, //here we can also use LinkedHashSet
+		System.out.println(hs);
+		System.out.println();
+		
+		System.out.println("For getting only the values.......");
+		HashSet hs2 = new HashSet(hm.values()); //here we can also use LinkedHashSet
+		System.out.println(hs2);
+		System.out.println();
+		
+		System.out.println("For getting the key-value pairs....");
+		HashSet hs3 = new HashSet(hm.entrySet()); //here we can also use LinkedHashSet
+		Iterator it = hs3.iterator();
+		while(it.hasNext()) {
+			System.out.println(it.next()); //For getting the key-value pairs
+			//Entry e = (Entry)it.next();
+			//System.out.println(e.getKey()+ " "+e.getValue()); //For getting the key-value pairs separately
+		}
+		System.out.println();
+		
+	}
+
+}
+_________________________________________TreeMap_____________________________________________
+
+-->TreeMap will work similarly to the TreeSet like Homogeneous data not allowed(but here we have key-value pair so hetereogeneous keys are not allowed but values are allowed) & following Ascending order 
+
+package Pack1;
+import java.util.*;
+
+public class TreeMapClass {
+	public static void main(String[] args) {
+		TreeMap tm = new TreeMap();
+		tm.put(101, "Anil"); //Ascending order is not maintained
+		tm.put(100, "Anil");  
+		tm.put(107, null); //null key is not allowed but null value is allowed
+		tm.put(101, "Polisu"); //duplicate keys are not allowed 
+		//Duplicate Values are allowed but when we use duplicate key old value is replaced with new value for that duplicate key
+		//tm.put("Madhuri", 10); // heterogeneous keys are not allowed
+		tm.put(103, "is"); //heterogeneous values are allowed
+		tm.put(105, "Awesome"); //it is available from java 1.2v
+		tm.put(110, "gara"); //Default capacity is 16
+		tm.put(102, 20000); //It is not synchronized
+		tm.put(100, "Gowri");
+
+		System.out.println(tm);
+		tm.put(101, "Raju");
+		System.out.println();
+		System.out.println(tm);
+
+	}
+
+}
+
+______________________________________________________________________________________________________________________________________________Lambda expressions_____________________________________________
+
+-->The below is just a normal method, for this method we will add some changes to look like a lambda expression
+
+    public void Method1() {
+        System.out.println("Anil Gara");
+    }
+
+-->For lambda expressions doesn't need access modifier
+-->For lambda expressions there is no return type
+-->We will assign entair method to something with variable name so method name is not required because already reference name is there because we assigned that method to some variable
+        "->" we will use this lambda expression operator
+-->If there is only one statment in the method body then no need of {} directly we can write like
+    System.out.println("Anil Gara");
+    -->After making some changes to that normal method here how it will looks like with Lambda expression
+
+    eg: something x = ()-> System.out.println("Anil Gara"); //here method name is not required instead of Method1() we are writing only (), -> this is an operator, we are not using { } because we have only one statement in the method
+
+-->Lambda Expressions must end with a semicolon
+
+-->***A marker interface in Java is an interface that has no methods or fields.
+-->***A functional interface means an Interface which is having only one abstract method
+
+-->If we want to assign the lambda expression to something then definitly it must be a Functional Interface wy because if we use any other, then the compiler will get confused for which method it should execute(if that class/interface having more than one method ), so Functional Interface have only one abstract method for that compiler won't get confuse so we have to use only Functional Interface only whenever we are dealing with the LambdaExpression and that method in that Functional. interface should be compatible(same parameters type, names can be different)
+    (so lambda expression should be compatible with the abstract method which is present in the functional interface)
+
+
+package Pack1;
+
+public interface Interface1 {
+	void M1();
+
+}
+-------------------------------------
+package Pack1;
+
+public interface Interface2 {
+	void M2(int a, int b);
+
+}
+-------------------------------------
+package Pack1;
+
+public interface Interface3 {
+	int M3(int f, int g);
+
+}
+
+
+package Pack1;
+
+public class LambdaExpression {
+	public void Display() {
+		System.out.println("Implementing Lambda Expression");
+		//-->If we want to assign the lambda expression to something then definitly it must be a Functional Interface and that method in that interface should be compatible(same parameters)
+		
+	    //(so lambda expression should be compatible with the abstract method which is present in hte functional interface)
+		
+		Interface1 i = ()->System.out.println("Helloooo"); //we are storing/assigning the method to the functional Interface
+		
+		//lambda expression providing implementation to the abstract method in the Functional Interface
+		
+		i.M1(); //with the help of reference we are calling method which is present in Functional Interface
+		
+		//whenever we are calling M1() which is present in the functional interface it will starts executing and we stored/assigned a method in that functional so that method will be printed
+		//
+	}
+	public static void main(String[] args) {
+		new LambdaExpression().Display();
+	}
+
+}
+
+-->In simple whenever we are calling the method in the Functional Interface by using the reference of LambdaExpression then the lambda expresiion will be executed why because we are assigning that LambdaExpression to that Functional interface.
+-->Inheritance is not required when we use LambdaExpression
+
+MyClass obj = () -> System.out.println("Hello"); // ❌ Not allowed
+    -->Because MyClass is a class, not a functional interface. Lambdas don’t create objects of classes, they create implementations of functional interfaces.
+
+    -->A lambda expression in Java can only be used where the compiler expects a functional interface (an interface with exactly one abstract method).
+
+
+--> () -> System.out.println("Hello"); //Here, () means “no arguments.”
+--> n -> System.out.println(n); //Here, n is the parameter(don’t need parentheses around n if there’s only one parameter).
+--> (a, b) -> System.out.println(a + b); //Multiple parameters
+
+
+package Pack1;
+
+import java.util.function.Function;
+
+public class MethodReference {
+	public static void main(String[] args) {
+		System.out.println("Implementing method reference......");
+		Function<Integer, Double> fun = (input) -> Math.sqrt(input);
+		System.out.println(fun.apply(4));
+		
+	}
+
+}
+
+Function<Integer, Double> fun = (input) -> Math.pow(input, 2);
+System.out.println(fun.apply(5));
+    -->this code calculates the square of 5 and prints 
+    -->here, Function is a default functional interface(no need to create we can direfctly use that)
+    -->apply is the abstract method present in that default functional interface
+    -->we are passing value(5) of parameter input using apply method to the lambda expression
+    -->generics don't support primitive so we have to write write wrapper class eg Integer Double
+
+Function<T, R> is a generic functional interface.
+T = the type of the input parameter.
+R = the type of the return value.
+
+    Function<Integer, Double> fun = (input) -> Math.sqrt(input);
+    -->This will calculate the square root of input
+
+_______________________________________________________________________________________________________________________________________________Method Reference______________________________________________
+
+-->Method Reference is used to refer(override) the method of functional Interface(replacement  for LambdaExpression)
+-->It is compact and easy form of LambdaExpression
+-->To replace the lambda expressions we will use Method Reference
+--> () -> System.out.println(msg);// here println is the method & out is the object
+        System.out::println //here in between object & method we will use "::" instead of "." i.e Method Reference(we will remove lambda expression means, this part "() ->"  and we don't have to pass the parameters )
+
+package Pack1;
+
+import java.util.function.Function;
+
+public class MethodReference {
+	public static void main(String[] args) {
+		System.out.println("Implementing method reference......");
+		//Function<Integer, Double> fun = (input) -> Math.sqrt(input); //LambdaExpression
+		Function<Integer, Double> MethodReference = Math::sqrt; //MethodReference
+		System.out.println(MethodReference.apply(4));	
+	}
+}
+-----------------------------------------z
+
+package Pack1;
+
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
+public class MethodReference {
+	public static int addition(int a, int b) {
+		return a+b;
+	}
+	public static void main(String[] args) {
+		//using lambda expression
+		BiFunction<Integer, Integer, Integer> bifun = (a, b) -> MethodReference.addition(a, b);
+		System.out.println(bifun.apply(10, 20)); //here this will execute apply() in functional interface named as "BiFunction"
+		//so we assigned lambda expression to that BiFunction Functional interface
+		//so whenever we are calling apply method the lambda expression will executes
+		//so in lambda expression we are calling a static method addition with class name
+		
+		//using method reference
+		BiFunction<Integer, Integer, Integer> bifunMethodRef = MethodReference::addition;
+		System.out.println(bifunMethodRef.apply(10, 20));
+	}
+
+}
+------------------------------------
+-->program to change all the letters into uppercase using lambda and MethodReference
+
+package Pack1;
+
+@FunctionalInterface
+interface printable {
+	void Print(String msg);
+}
+
+public class MethodReference {
+	public void Cap(String msg) {
+		msg =  msg.toUpperCase();
+		System.out.println(msg);
+	}
+
+	public static void main(String[] args) {
+		MethodReference obj = new MethodReference();
+		
+		printable pr = (msg) -> obj.Cap(msg); //using LambdaExpression
+		pr.Print("Hello Anil Gara...");
+		
+		printable prn = obj::Cap; //using MerthodReference
+		prn.Print("Hello gara anil......");
+	}
+}
+------------------------------------
+-->prograam to convert list into set using LambdaExpression, MethodReference 
+package Pack1;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
+
+
+public class MethodReference {
+
+	public static void main(String[] args) {
+
+		List<String> ls = new ArrayList<>();
+		ls.add("Apple");
+		ls.add("banana");
+		ls.add("Muskmelon");
+		ls.add("Grapes");
+		//Using LambdaExpression
+		Function<List<String>, Set<String>> lst = (listlu) -> new HashSet<>(listlu);
+		System.out.println(lst.apply(ls));
+		
+		//Using MethodReference
+		Function<List<String>, Set<String>> mref = HashSet::new;
+		System.out.println(mref.apply(ls));
+	}
+}
+
+
+------------------------------------
+
+-->In below program first we write statements/code using LambdaExpression then we rewrite those using Method Reference
+
+package com.java.lambda.methodref;
+
+import java.util.function.Function;
+import java.util.function.BiFunction;
+
+public class MethodReferencesDemo {
+
+    public static int addition(int a, int b) {
+        return (a + b);
+    }
+
+    public static void main(String[] args) {
+
+        // 1. Method reference to a static method(there are 4 types of method references)
+
+        // Lambda expression
+        Function<Integer, Double> functionLambda = (input) -> Math.sqrt(input);
+        System.out.println(functionLambda.apply(4));
+
+        // Using method reference
+        Function<Integer, Double> functionMethodRef = Math::sqrt;
+        System.out.println(functionMethodRef.apply(4));
+
+        // Lambda expression with BiFunction
+        BiFunction<Integer, Integer, Integer> biFunctionLambda = (a, b) -> MethodReferencesDemo.addition(a, b);
+        System.out.println(biFunctionLambda.apply(10, 20));
+
+        // Using method reference with BiFunction
+        BiFunction<Integer, Integer, Integer> biFunction = MethodReferencesDemo::addition;
+        System.out.println(biFunction.apply(19, 20));
+    }
+}
+
+BiFunction<T, U, R>
+    -->This is a functional interface from java.util.function.
+    -->It represents a function that takes two inputs (T and U) and produces a result (R).
+
+
+
+________________________________________________________________________________________________________________________________________________Inner classes_______________________________________________
+
+
+-->Inner Class means Class inside a class used to access the private members of the outer class
+-->there are 4 types of inner classes 1)Nested InnerClass 2)Static InnerClass 3)Method Local Innerclass 4)anonymous InnerClass
+-->For Inner classes we can use all the 4 access modifiers
+
+*** If we want to use the main method inside the inner class then make that innerclass as static(if we make innerclass as static then that is known as Static innerclass)
+
+    -->We can't create the Object directly for the InnerClass If we want to create object for the innerclass the we can create like,
+                ClassA.InnerClass obj = new ClassA().new InnerClass();
+                same as, ClassA obj = new ClassA();
+                -->then we can call the methods present in the InnerClass
+                -->we can acces private methods which present in outside class using innerclass
+
+----------------------------------------1)Nested InnerClass:----------------------------------------
+
+package Pack1;
+
+class NestedInnerClass {
+	private void M1() {
+		System.out.println("Hiii I'm from Outer Class method");
+		System.out.println("We can access this private method using innerClass");
+	}
+	NestedInnerClass() {
+		System.out.println("I'm a Constructor from OuterClass");
+	}
+	class InnerClass {
+		public void M2() {
+			System.out.println("Hello I'm from InnerClass Method");
+			M1();
+		}
+		InnerClass() {
+			System.out.println("hlooo I'm a Constructor from InnerClass ");
+		}
+	}
+	public static void main(String[] args) {
+		NestedInnerClass.InnerClass obj = new NestedInnerClass().new InnerClass();//If we want to call the methods inside innerClass
+		obj.M2();
+	}
+}
+
+---------------------------------------2)Static InnerClass:----------------------------------------
+
+ -->We can't access non static things(variables,methods) inside the static method
+
+package Pack1;
+
+public class StaticInnerClass {
+	
+	StaticInnerClass() {
+		System.out.println("outer class Constructor");
+		
+	}
+	static {
+		System.out.println("Outer class static block");
+		
+	}
+	public void M1() {
+		System.out.println("normal method inside OuterClass");
+	}
+	
+	static class InnerClass {
+		InnerClass() {
+			System.out.println("inner class Constructor");
+			
+		}
+		static {
+			System.out.println("Inner class static block");
+			
+		}
+		public void M2() {
+			System.out.println("normal method inside innerClass");
+		}
+		public static void main(String[] args) {
+			System.out.println("inner class");
+			InnerClass iobj = new InnerClass();
+			iobj.M2();
+		}
+	}
+	public static void main(String[] args) {
+		StaticInnerClass ob = new StaticInnerClass();
+		ob.M1();
+		
+	}
+
+}
+
+-->In the above progra there are 2 main methods so the compiler will asks us which class we need to run
+
+------------------------------------Method LOcal InnerClass:-----------------------------------------
+
+-->If we write a class inside a method then it is a Method Local innerClass
+
+package Pack1;
+
+public class MethodLocalInnerClass {
+	public void M1() {
+		class Inner {
+			public void M2() {
+				System.out.println("Method inside the MethodLocalInnerClass ");
+			}
+		}
+		Inner in = new Inner();
+		in.M2();
+		
+	}
+	public static void main(String[] args) {
+		MethodLocalInnerClass mobj = new MethodLocalInnerClass();
+		mobj.M1();
+	} 
+
+}
+
+//-->We have to create object for the innerClass if we want to access the methods inside the Innerclass
+//-->we have to create objects for inner and outer classes for then only that methodlocalInnerClass will start execute(because methodlocalInnerClass is present inside the method so if we want to access methodlocalInnerClass then we need to call that particular method for that we have to create object for the outerClass then if we want to access methodlocalInnerClass so we need to create object for that methodlocalInnerClass, so totally 2 objects we need to create)
+(here we are just calling innerClass by creating object for that InnerClass then we just run the method by creating the object for outerClass and calling it)
+
+//-->We can't create object for the methodlocalInnerClass outside the method(compilor treats methodlocalInnerClass like a local varible)
+
+--------------------------------------NonymousInnerClass-------------------------------------------
+
+-->Anonymous InnerClass means a class without having any name 
+
+
+package Pack1;
+
+public class ClassB {
+	public void Show() {
+		System.out.println("method from outer class");
+	}
+
+}
+
+
+
+package Pack1;
+
+public class AnonymousInnerClass {
+	
+	static ClassB bob = new ClassB() {
+		public void Show() {
+			super.Show(); //this will prints the method of outer/parent class
+			System.out.println("method present in the anonymous inner class");
+		}
+		
+	};
+	public static void main(String[] args) {
+		bob.Show(); // show() present in the anonymous class will be executed because when we use anonymous inner class that extends ClassB and overrides its Show() method.
+	}
+
+}
+
+uses of anonymous innerclasses:
+-->Instead of creating a whole new subclass, you can override just the methods you need inline(same line).
+-->Saves you from writing extra classes when you only need them once.
+
+
+_________________________________________Stream API:classes__________________________________________
+
+-->A Stream is a sequence of elements(elements  means items inside your collection)
+
+-->Unlike Collections, Streams don’t store data, they process data.
+-->Using collections also we can process data but entair structure will be changed but when we use  Streams mainly Process data without changing the original source.
+
+-->It supports sequential and parallel aggregate operations.
+    sequential:
+        1)Run on one thread.
+        2)Process elements one by one, in order.
+        3)Default when you call .stream().
+
+    Parallel Aggregate Operations:
+        1)Run on multiple threads simultaneously.
+        2)Created using .parallelStream() or .stream().parallel().
+        3)Splits the data into chunks, processes them in parallel, then merges results.
+
+
+Java Stream Pipeline:
+Data Source  →  Intermediate Operations  →  Terminal Operation
+(Collection,     (filter, map, sorted,      (forEach, collect,
+ Array, I/O)      distinct, limit, etc.)     reduce, count, etc.)
+
+
+Visual Example
+
+ [ "John", "Jane", "Jack", "Tom" ]   // Data Source (List)
+
+        ↓ stream()
+
+        filter(name -> name.startsWith("J"))   // Intermediate
+        ↓
+        map(String::toUpperCase)               // Intermediate
+        ↓
+        sorted()                               // Intermediate
+        ↓
+        forEach(System.out::println)           // Terminal
+
+
+Code Example with Pipeline
+
+import java.util.Arrays;
+import java.util.List;
+
+public class StreamPipelineExample {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("John", "Jane", "Jack", "Tom");
+
+        names.stream() // Source
+             .filter(name -> name.startsWith("J")) // Intermediate
+             .map(String::toUpperCase)             // Intermediate
+             .sorted()                             // Intermediate
+             .forEach(System.out::println);        // Terminal
+    }
+}
+
+Output:
+
+JACK
+JANE
+JOHN
+
+Pipeline Rules
+Source → Can be a collection, array, or generated data.
+Intermediate operations → Transform or filter data, return a new stream, lazy execution.
+Terminal operation → Produces a result or side-effect, triggers execution.
+Stream is consumed once → You can’t reuse it after a terminal operation.
+
+
+
+
+
+
+
+
+
+-->
+-->
+-->
+-->
+-->
+-->
+-->
+-->
+-->
+-->
+-->
+-->
+-->
+
+
+_______________________________________________________________________________________________________________________________________________
+
+🎯 Smart Path For SpringBoot
+
+Start with Spring Core: Learn dependency injection (IoC container, beans).
+Move to Spring Boot: Build REST APIs, understand auto-configuration.
+Add Spring Data JPA: Work with databases easily.
+Explore Spring Security: Authentication & authorization basics.
+Gradually pick up advanced Java concepts as they appear in Spring (annotations, reflection, concurrency).
