@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Speech Agent</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f5f7fa;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .container {
+            background: white;
+            width: 400px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .start {
+            background-color: green;
+            color: white;
+        }
+
+        .stop {
+            background-color: red;
+            color: white;
+        }
+
+        .output-box {
+            margin-top: 20px;
+            padding: 15px;
+            border: 2px dashed #ccc;
+            min-height: 80px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>🎤 Speech to Text Agent</h2>
+
+    <button class="start" onclick="startRecognition()">Start</button>
+    <button class="stop" onclick="stopRecognition()">Stop & Save</button>
+
+    <div id="output" class="output-box">
+        Start speaking...
+    </div>
+
+</div>
+
+<script>
+
+let recognition;
+let finalText = "";
+
+function startRecognition() {
+
+    const SpeechAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechAPI) {
+        alert("Use Chrome browser");
+        return;
+    }
+
+    recognition = new SpeechAPI();
+
+    recognition.lang = 'en-US';
+    recognition.continuous = true;
+    recognition.interimResults = true;
+
+    finalText = "";
+
+    recognition.onresult = function(event) {
+        let interimText = "";
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+            let transcript = event.results[i][0].transcript;
+
+            if (event.results[i].isFinal) {
+                finalText += transcript + " ";
+            } else {
+                interimText += transcript;
+            }
+        }
+
+        document.getElementById("output").innerText = finalText + interimText;
+    };
+
+    recognition.onend = function() {
+        document.getElementById("output").innerText = finalText;
+    };
+
+    recognition.onerror = function(event) {
+        alert("Error: " + event.error);
+    };
+
+    recognition.start();
+}
+
+function stopRecognition() {
+
+    if (recognition) {
+        recognition.stop();
+
+        document.getElementById("output").innerText = finalText;
+
+        fetch('/save', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: 'text=' + encodeURIComponent(finalText)
+        });
+
+        alert("✅ Saved to Excel!");
+    }
+}
+
+</script>
+
+</body>
+</html>
